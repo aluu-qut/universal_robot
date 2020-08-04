@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robotiq_arg2f_base_link">
+  <!-- <xacro:include filename="robotiq.xacro"/> -->
+    <!-- <xacro:include filename="$(find robotiq_2f_85_gripper_visualization)/urdf/robotiq_arg2f.xacro"/>
+    <xacro:robotiq_arg2f_base_link connected_to="hello" xyz="0.5 0.5 0.5" rpy="0 0 0"/>
+ -->
+
+    <xacro:include filename="$(find robotiq_2f_85_gripper_visualization)/urdf/robotiq_arg2f_85_model_macro.xacro"/>
+    <xacro:robotiq_arg2f_85 prefix="" connected_to="ee_link" xyz="0 0 0" rpy="0 0 0" />
+
+</robot>
