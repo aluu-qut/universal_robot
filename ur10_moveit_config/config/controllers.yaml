@@ -1,5 +1,7 @@
 controller_list:
-  - name: ""
+  # - name: ""
+    # https://github.com/ros-industrial/ur_modern_driver/issues/261
+  - name: /vel_based_pos_traj_controller #or /pos_based_pos_traj_controller
     action_ns: follow_joint_trajectory
     type: FollowJointTrajectory
     joints:
