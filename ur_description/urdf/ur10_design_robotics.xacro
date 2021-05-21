@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!-- xacro for extras design robotics components mounted on the manipulator -->
+
+<robot name="ur10_dr_additions" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="ur10_dr_additions" params="prefix joint_limited d435_prefix">
+
+    <!-- define the steel table the ur10 sits on -->
+  <link name="${prefix}steel_table">
+    <visual>
+      <geometry>
+        <mesh filename="package://burnisher_ur10_description/meshes/visual/uap-table.dae"/>
+      </geometry>
+      <material name="LightGrey">
+        <color rgba="0.7 0.7 0.7 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://burnisher_ur10_description/meshes/collision/uap-table.stl"/>
+      </geometry>
+    </collision>
+    </link>
+
+    <joint name="${prefix}steel_table_joint" type="fixed">
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}steel_table"/>
+      <origin rpy="1.570796325 0.0 0.0" xyz="0.3 -0.1 0"/>
+    </joint>
+
+<!-- Transform link from arm to d435 -->
+    <!-- <joint name="kinect_joint" type="fixed">
+      <origin rpy="0 0 0" xyz="0 0.11 0"/>
+      <parent link="${prefix}ee_link"/>
+      <child link="${d435_prefix}kinect_back_link"/>
+    </joint>
+    <link name="${d435_prefix}kinect_back_link"/> -->
+
+<!-- gripper extender link -->
+    <joint name="${prefix}robotiq_85_adapter_joint" type="fixed">
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <parent link="${prefix}ee_link"/>
+      <child link="${prefix}robotiq_85_adapter_link"/>
+    </joint>
+    <!-- <link name="${prefix}robotiq_85_adapter_link">
+      <visual>
+        <geometry>
+          <cylinder length="0.218" radius="0.014"/>
+        </geometry>
+        <origin rpy="0 ${pi/2} 0" xyz="0.104 0.0 0.0"/>
+        <material name="White">
+          <color rgba="${150/255} ${150/255} ${150/255} 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <cylinder length="0.218" radius="0.014"/>
+        </geometry>
+        <origin rpy="0 ${pi/2} 0" xyz="0.104 0.0 0.00"/>
+      </collision>
+      <inertial>
+        <mass value="0.6"/>
+        <inertia ixx="1" ixy="0.0" ixz="0.0" iyy="1" iyz="0.0" izz="1"/>
+      </inertial>
+    </link> -->
+
+  </xacro:macro>
+</robot>

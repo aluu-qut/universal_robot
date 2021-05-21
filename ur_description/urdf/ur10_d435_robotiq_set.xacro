@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro"
+       name="ur10_d435_robotiq_set" >
+
+    <xacro:arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface"/>
+
+    <!-- common stuff -->
+    <xacro:include filename="$(find ur_description)/urdf/common.gazebo.xacro" />
+
+    <!-- ur10 include -->
+    <xacro:include filename="$(find ur_description)/urdf/ur10.urdf.xacro" />
+
+    <!-- ur10 connection -->
+    <xacro:ur10_robot prefix="" joint_limited="false" transmission_hw_interface="$(arg transmission_hw_interface)"/>
+
+    <!-- design robotics steel table plus additions -->
+    <xacro:include filename="$(find ur_description)/urdf/ur10_design_robotics.xacro"/>
+    <xacro:ur10_dr_additions prefix="" joint_limited="false" d435_prefix="d435"/>
+
+     <!-- robotiq (grippers) include -->
+    <xacro:include filename="$(find robotiq_2f_c2_gripper_visualization)/urdf/robotiq_c2_model_macro.xacro"/>
+     <!-- robotiq (grippers) connection -->
+    <xacro:robotiq_c2_model prefix="" />
+    <!-- <xacro:robotiq_c2_model prefix="" connected_to="ee_link" xyz="0 0 0" rpy="0 ${pi/2} 0" /> -->
+
+    <!-- real sense -->
+    <link name="world" />
+
+    <joint name="world_joint" type="fixed">
+        <parent link="world" />
+        <child link = "base_link" />
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    </joint>
+
+</robot>
