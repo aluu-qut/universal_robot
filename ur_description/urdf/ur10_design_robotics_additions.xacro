@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!-- xacro for extras design robotics components mounted on the manipulator -->
+
+<robot name="ur10_dr_additions" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="ur10_dr_additions" params="prefix joint_limited d435_prefix">
+
+    <!-- define the steel table the ur10 sits on -->
+  <link name="${prefix}steel_table">
+    <visual>
+      <geometry>
+        <mesh filename="package://burnisher_ur10_description/meshes/visual/uap-table.dae"/>
+      </geometry>
+      <material name="LightGrey">
+        <color rgba="0.7 0.7 0.7 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://burnisher_ur10_description/meshes/collision/uap-table.stl"/>
+      </geometry>
+    </collision>
+    </link>
+
+    <joint name="${prefix}steel_table_joint" type="fixed">
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}steel_table"/>
+      <origin rpy="1.570796325 0.0 0.0" xyz="0.3 -0.1 0"/>
+    </joint>
+
+
+    <!-- d435 real sense 3d printed mount -->\
+    <link name="${prefix}d435_laser_cut_board_link"/>
+    <!-- <link name="${prefix}d435_laser_cut_board_link">
+        <visual>
+        <geometry>
+            <mesh filename="package://burnisher_ur10_description/meshes/visual/mv3burnisher_cameras_mount.dae"/>
+        </geometry>
+        <material name="LightGrey">
+            <color rgba="0.7 0.7 0.7 1.0"/>
+        </material>
+        </visual>
+        <collision>
+        <geometry>
+            <mesh filename="package://burnisher_ur10_description/meshes/collision/mv3burnisher_cameras_mount.stl"/>
+        </geometry>
+        </collision>
+        </link> -->
+    <joint name="${prefix}d435_mount_joint" type="fixed">
+      <parent link="${prefix}ee_link"/>
+      <child link="${prefix}d435_laser_cut_board_link"/>
+      <origin rpy="0.0 1.570796325 0.0" xyz="0.003 0 0"/>
+    </joint>
+
+<!-- Transform link from arm to d435 -->
+    <joint name="${prefix}d435_joint" type="fixed">
+      <origin rpy="0 0 0" xyz="0.11 0 0"/>
+      <parent link="${prefix}d435_laser_cut_board_link"/>
+      <child link="${d435_prefix}_link"/>
+    </joint>
+    <link name="${d435_prefix}_link"/>
+
+
+  </xacro:macro>
+</robot>
