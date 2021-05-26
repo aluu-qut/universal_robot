@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="ur10_d435_robotiq_robot">
+
+    <xacro:arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface"/>
+
+    <!-- common stuff -->
+    <xacro:include filename="$(find ur_description)/urdf/common.gazebo.xacro" />
+
+    <!-- ur10 -->
+    <xacro:include filename="$(find ur_description)/urdf/ur10.urdf.xacro" />
+
+    <xacro:ur10_robot prefix="" joint_limited="true" shoulder_pan_lower_limit="${-pi}" shoulder_pan_upper_limit="${pi}" shoulder_lift_lower_limit="${-pi}" shoulder_lift_upper_limit="${pi}" elbow_joint_lower_limit="${-pi}" elbow_joint_upper_limit="${pi}" wrist_1_lower_limit="${-pi}" wrist_1_upper_limit="${pi}" wrist_2_lower_limit="${-pi}" wrist_2_upper_limit="${pi}" wrist_3_lower_limit="${-pi}" wrist_3_upper_limit="${pi}" transmission_hw_interface="$(arg transmission_hw_interface)" />
+
+    <!-- robotiq (grippers) offset with wrist camera spacing (0.224m)-->
+    <xacro:include filename="$(find robotiq_2f_85_gripper_visualization)/urdf/robotiq_arg2f_85_model_macro.xacro"/>
+    <xacro:robotiq_arg2f_85 prefix="" parent="d435_laser_cut_board_link" xyz="0 0 0.0224" rpy="0 0 0"/>
+
+    <!-- d435 sensor -->
+    <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
+    <xacro:sensor_d435 parent="d435_link" name="camera" use_nominal_extrinsics="false">
+        <origin xyz="0 0 0" rpy="0 -1.5707 3.1415"/>
+    </xacro:sensor_d435>
+
+    <!-- design robotics additions and steel table -->
+    <xacro:include filename="$(find ur_description)/urdf/ur10_design_robotics_additions.xacro"/>
+    <xacro:ur10_dr_additions prefix="" joint_limited="false" d435_prefix="d435"/>
+
+    <link name="world" />
+
+    <joint name="world_joint" type="fixed">
+        <parent link="world" />
+        <child link = "base_link" />
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+    </joint>
+
+</robot>

@@ -59,6 +59,5 @@
     </joint>
     <link name="${d435_prefix}_link"/>
 
-
   </xacro:macro>
 </robot>
